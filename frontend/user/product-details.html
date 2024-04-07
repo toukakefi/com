@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mystore</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <script>
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var c = url.searchParams.get("id");
+        console.log(c);
+       var categ;
+        // Post a user
+        var url3 = "http://127.0.0.1:3000/produits/" + c;
+        var xhr3 = new XMLHttpRequest();
+        xhr3.open("GET", url3, true);
+    
+        xhr3.onload = function () {
+          var data = JSON.parse(xhr3.responseText);
+          if (xhr3.readyState == 4 && xhr3.status == "200") {
+            document.getElementById("nom").innerHTML  = data.nom;
+            document.getElementById("prix").innerHTML = data.prix;
+            document.getElementById("nomp").innerHTML = data.nom;
+            document.getElementById("categ").innerHTML = data.categorie;
+            document.getElementById("scateg").innerHTML = data.sCategorie;
+            document.getElementById("descp").innerHTML = data.description;
+            document.getElementById("imgp").src = data.image;
+            categ=data.sCategorie;
+          } else {
+            console.log("error");
+          }
+        };
+        xhr3.send(null);
+        var request = new XMLHttpRequest();
+    
+          // Open a new connection, using the GET request on the URL endpoint
+          request.open("GET", "http://127.0.0.1:3000/produits", true);
+    
+          request.onload = function () {
+            // Begin accessing JSON data here
+            if (request.status >= 200 && request.status < 400) {
+              var data = JSON.parse(this.response);
+              // data.sort(function(a, b) { return new Date(b.createdAt) - new Date(a.createdAt); });
+    
+              console.log(data);
+              var j = 1;
+              var ee = document.getElementById("relatedp");
+              data.forEach((i) => {
+                if(i.sCategorie==categ && i._id!=c){
+                console.log(i._id);
+                
+                var ch =
+                  `<div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="` +
+                        i.image +
+                        `">
+                        <ul class="product__hover">
+                            <li><a href="` +
+                i.image +
+                `" class="image-popup"><span class="arrow_expand"></span></a></li>
+                            <li><a href="#"><span class="icon_heart_alt" onclick="favoris('` +
+                i._id +
+                `')"></span></a></li>
+                            <li><a href="#"><span class="icon_bag_alt" onclick="ajout_panier('` +
+                i._id +
+                `', '` +
+                i.quantite +
+                `')"></span></a></li>
+                        </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">` +
+                                i.nom +
+                                `</a></h6>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <div class="product__price">` +
+                                i.prix +
+                                ` Dt</div>
+                        </div>
+                    </div>
+                </div>`;
+    
+                ee.insertAdjacentHTML("beforeend", ch);}
+              });
+            }
+          };
+          request.send();
+            function ajout_panier() {
+                // Vérifier si l'utilisateur est authentifié
+                var nb=document.getElementById("qte").value;
+                var idUser = localStorage.getItem("idU");
+                if (!idUser) {
+                    // Si l'utilisateur n'est pas authentifié, afficher une alerte stylisée
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'You need to login or create an account first',
+                        showCancelButton: true,
+                        confirmButtonText: 'Login',
+                        cancelButtonText: 'Create account'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Rediriger vers la page de connexion
+                            location.replace("signin.html");
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            // Rediriger vers la page de création de compte
+                            location.replace("signup.html");
+                        }
+                    });
+                    return; // Arrêter l'exécution de la fonction
+                }
+                if(qt!=0){
+               
+                var url = "http://127.0.0.1:3000/paniers";
+                var data = {
+                    idUser: idUser,
+                    idProduit: c,
+                    quantite: 1
+                };
+                var json = JSON.stringify(data);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+                xhr.onload = function () {
+                    if (xhr.readyState == 4 && xhr.status == "200") {
+                        alert("Element Added");
+                        redirectt();
+                    } else {
+                        alert("Error: " + xhr.statusText);
+                        console.table(JSON.parse(xhr.responseText));
+                    }
+                };
+                xhr.send(json);
+            }
+            else{  window.confirm("out of stock");  }
+            }
+            
+            function redirectt() {
+                var d = window.confirm("Go to cart");
+                if (d == true) {
+                    location.replace("shop-cart.html");
+                }
+            }
+            
+            function favoris() {
+                var idUser = localStorage.getItem("idU");
+                if (!idUser) {
+                  // Si l'utilisateur n'est pas authentifié, afficher une alerte stylisée
+                  Swal.fire({
+                    icon: "info",
+                    title: "You need to login or create an account first",
+                    showCancelButton: true,
+                    confirmButtonText: "Login",
+                    cancelButtonText: "Create account",
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+                      // Rediriger vers la page de connexion
+                      location.replace("signin.html");
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                      // Rediriger vers la page de création de compte
+                      location.replace("signup.html");
+                    }
+                  });
+                  return; // Arrêter l'exécution de la fonction
+                }
+        
+                var url = "http://127.0.0.1:3000/favorites";
+                var data = {
+                  user: idUser,
+                  produit: c,
+                };
+                var json = JSON.stringify(data);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader("Content-type", "application/json; charset=utf-8");
+                xhr.onload = function () {
+                  if (xhr.readyState == 4 && xhr.status == "200") {
+                    alert("Element Added to the favorite list");
+                    redirect();
+                  } else {
+                    alert("Error: " + xhr.statusText);
+                    console.table(JSON.parse(xhr.responseText));
+                  }
+                };
+                xhr.send(json);
+              }
+        
+              function redirect() {
+                var d = window.confirm("Go to favorites");
+                if (d == true) {
+                  location.replace("favorite.html");
+                }
+              }
+              
+    
+    </script>
+    
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li ><a href="./index.html">Home</a></li>
+                            <li class="active"><a href="./shop.html">Shop</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            <a href="#">Login</a>
+                            <a href="#">Register</a>
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="favorite.html"><span class="icon_heart_alt"></span>
+                                <div class="tip" id="lengthFav"></div>
+                            </a></li>
+                            <li><a href="#"><span class="icon_bag_alt"></span>
+                                <div class="tip" id="lengthPanier"></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <a href="#" id="categ"> </a>
+                        <span id="nomp"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad">
+        <div class="container">
+            <div class="row pb-5">
+                <div class="col-lg-6">
+                    <div class="product__details__pic">
+                       
+                        <div class="product__details__slider__content">
+                            <div class="product__details__pic__slider owl-carousel">
+                                <img data-hash="product-1" class="product__big__img" src="" alt="" id="imgp">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="product__details__text">
+                        <h3 id="nom"> </h3>
+                        <span id="scateg"></span>
+                        <div class="product__details__price" id="prix"></div>
+                        <p id="descp"></p>
+                        <div class="product__details__button">
+                            <div class="quantity">
+                                <span>Quantity:</span>
+                                <div class="pro-qty">
+                                    <input type="text" value="1" id="qte">
+                                </div>
+                            </div>
+                            <a href="#" class="cart-btn" onclick="ajout_panier()"><span class="icon_bag_alt"></span> Add to cart</a>
+                            <ul>
+                                <li><a href="#"><span class="icon_heart_alt" onclick="fvoris()"></span></a></li>
+                                 
+                            </ul>
+                        </div>
+                        <div class="product__details__widget">
+                            <ul>
+                                
+                               
+                                <li>
+                                    <span>Available size:</span>
+                                    <div class="size__btn">
+                                        <label for="xs-btn" class="active">
+                                            <input type="radio" id="xs-btn">
+                                            xs
+                                        </label>
+                                        <label for="s-btn">
+                                            <input type="radio" id="s-btn">
+                                            s
+                                        </label>
+                                        <label for="m-btn">
+                                            <input type="radio" id="m-btn">
+                                            m
+                                        </label>
+                                        <label for="l-btn">
+                                            <input type="radio" id="l-btn">
+                                            l
+                                        </label>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+
+            <div class="row pt-5 " id="relatedp">
+                <div class="col-lg-12 text-center">
+                    <div class="related__title">
+                        <h5>RELATED PRODUCTS</h5>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Instagram Begin -->
+    <div class="instagram">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Instagram End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="footer__about">
+                <div class="footer__logo">
+                  <a href="./index.html"><img src="img/logo.png" alt="" /></a>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                  eiusmod tempor incididunt cilisis.
+                </p>
+                <div class="footer__payment">
+                  <a href="#"><img src="img/payment/payment-1.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-2.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-3.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-4.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-5.png" alt="" /></a>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="footer__newslatter">
+                <h6>NEWSLETTER</h6>
+                <form action="#">
+                  <input type="text" placeholder="Email" />
+                  <button type="submit" class="site-btn">Subscribe</button>
+                </form>
+                <div class="footer__social">
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                  <a href="#"><i class="fa fa-youtube-play"></i></a>
+                  <a href="#"><i class="fa fa-instagram"></i></a>
+                  <a href="#"><i class="fa fa-pinterest"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+            
+        // Définir une requête de connection standard JS
+        var request = new XMLHttpRequest();
+        // Choisir la méthode GET comme une méthode d'accès au serveur et récupérer les données .
+        request.open("GET", "http://127.0.0.1:3000/favorites", true);
+        // Load les données à partir de la serveur -> Début connection
+        request.onload = function () {
+           
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
+          var l=0;
+          data.forEach((i) => {
+           
+            if(i.user == localStorage.getItem("idU")){
+                console.log(i._id)
+                   l+=1;
+                   }
+                });
+                document.getElementById("lengthFav").innerHTML = l;
+              };
+        // Send request
+       
+        request.send();
+       
+      </script>
+      <script>
+       
+        // Définir une requête de connection standard JS
+        var request = new XMLHttpRequest();
+        // Choisir la méthode GET comme une méthode d'accès au serveur et récupérer les données .
+        request.open("GET", "http://127.0.0.1:3000/paniers", true);
+        // Load les données à partir de la serveur -> Début connection
+        request.onload = function () {
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
+          var l=0;
+          data.forEach((i) => {
+            if(i.idUser == localStorage.getItem("idU")){
+                   l+=1; }
+                }
+                 );
+                 document.getElementById("lengthPanier").innerHTML = l;
+              };
+        // Send request
+        request.send();
+       
+      </script>
+
+</body>
+
+</html>

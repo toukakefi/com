@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mystore</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay"></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            <li><a href="#"><span class="icon_heart_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+            <li><a href="#"><span class="icon_bag_alt"></span>
+                <div class="tip">2</div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="#">Login</a>
+            <a href="#">Register</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li ><a href="./index.html">Home</a></li>
+                            <li class="active"><a href="./shop.html">Shop</a></li>
+                            <li><a href="./shopWomen.html">Women’s</a></li>
+                            <li><a href="./shopMen.html">Men’s</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+                        <div class="header__right__auth">
+                            <a href="signin.html">Login</a>
+                            <a href="signup.html">Register</a>
+                        </div>
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+                            <li><a href="favorite.html"><span class="icon_heart_alt"></span>
+                                <div class="tip" id="lengthFav"></div>
+                            </a></li>
+                            <li><a href="#"><span class="icon_bag_alt"></span>
+                                <div class="tip" id="lengthPanier"></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <span>Shopping cart</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Shop Cart Section Begin -->
+    <section class="shop-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shop__cart__table">
+                        <table id="cartItems" >
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn">
+                        <a href="shop.html">Continue Shopping</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="cart__btn update__btn">
+                        <a href="#" onclick="updateCart()"><span class="icon_loading"></span> Update cart</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="discount__content">
+                        <h6>Discount codes</h6>
+                        <form action="#">
+                            <input type="text" placeholder="Enter your coupon code">
+                            <button type="submit" class="site-btn">Apply</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4 offset-lg-2">
+                    <div class="cart__total__procced">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li id="Subtotal">Subtotal <span>$ 750.0</span></li>
+                            <li>Total <span>$ 750.0</span></li>
+                        </ul>
+                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shop Cart Section End -->
+
+    <!-- Instagram Begin -->
+    <div class="instagram">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-1.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-2.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-3.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-4.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-5.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-4 p-0">
+                    <div class="instagram__item set-bg" data-setbg="img/instagram/insta-6.jpg">
+                        <div class="instagram__text">
+                            <i class="fa fa-instagram"></i>
+                            <a href="#">@ ashion_shop</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Instagram End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="footer__about">
+                <div class="footer__logo">
+                  <a href="./index.html"><img src="img/logo.png" alt="" /></a>
+                </div>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                  eiusmod tempor incididunt cilisis.
+                </p>
+                <div class="footer__payment">
+                  <a href="#"><img src="img/payment/payment-1.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-2.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-3.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-4.png" alt="" /></a>
+                  <a href="#"><img src="img/payment/payment-5.png" alt="" /></a>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <div class="footer__newslatter">
+                <h6>NEWSLETTER</h6>
+                <form action="#">
+                  <input type="text" placeholder="Email" />
+                  <button type="submit" class="site-btn">Subscribe</button>
+                </form>
+                <div class="footer__social">
+                  <a href="#"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-twitter"></i></a>
+                  <a href="#"><i class="fa fa-youtube-play"></i></a>
+                  <a href="#"><i class="fa fa-instagram"></i></a>
+                  <a href="#"><i class="fa fa-pinterest"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch">+</div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search End -->
+
+    <!-- Js Plugins -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/mixitup.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/jquery.nicescroll.min.js"></script>
+    <script src="js/main.js"></script>
+
+
+
+
+
+
+
+
+    <script>
+        // Définir une requête de connection standard JS
+        var request = new XMLHttpRequest();
+        // Choisir la méthode GET comme une méthode d'accès au serveur et récupérer les données .
+        request.open("GET", "http://127.0.0.1:3000/paniers", true);
+        // Load les données à partir de la serveur -> Début connection
+        request.onload = function () {
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
+          var table = document.getElementById("cartItems");
+          console.log(data);
+          var j = 0;
+          data.forEach((i) => {
+            if(i.idUser == localStorage.getItem("idU")){
+            // Insérer une ligne dans le tableau
+            var row = table.insertRow(-1);
+            // Insérer des cellules dans le tableau
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+            // Récupérer les données du produit correspondant à l'idProduit de la table produit
+            $.getJSON(
+              "http://127.0.0.1:3000/produits/" + i.idProduit,
+              function (prod) {
+            cell1.innerHTML = ` <div class="media"  id="paniers">
+                <input type="hidden" class="iddc" value="`+i._id+`">
+                <input type="hidden" class="iddp" value="`+i.idProduit+`">
+                <div class="cart__product__item">
+                <img src="`+prod.image+`" alt="">
+                <div class="cart__product__item__title">
+                    <h6>`+prod.nom+`</h6>
+                </div> 
+             </div>`;
+            cell2.innerHTML = `<div class="cart__price">`+prod.prix+`Dt</div>`;
+            cell3.innerHTML = ` <div class="cart__quantity input-number">
+                <div class="pro-qty">
+                    <input type="text" value="`+i.quantite+`" min="0" max="10">
+                </div>
+            </div>`;
+            cell4.innerHTML = `<div class="cart__total">`+prod.prix * i.quantite+`Dt</div>`;
+            cell5.innerHTML =`<div class="cart__close"><span class="icon_close" onclick="removeItem('`+i._id+`')"></span></div> `;
+              j+= prod.prix * i.quantite;
+              document.getElementById("subTotal").innerHTML = j;
+            }
+            );
+            }
+          });
+        };
+        // Send request
+        request.send();
+
+        function removeItem(idC){
+          var d = window.confirm("want to Delete");
+          if (d == true) {
+      
+            // Définir la collection à manipuler
+            var url3 = "http://127.0.0.1:3000/paniers/" + idC;
+            // Définir une requête de connection standard JS
+            var xhr3 = new XMLHttpRequest();
+            // Choisir la méthode DELETE comme une méthode d'accès au serveur et récupérer les données .
+            xhr3.open("DELETE", url3, true);
+      
+            xhr3.onload = function () {
+              if (xhr3.readyState == 4 && xhr3.status == "200") {
+                location.replace("cart.html");
+                event.preventDefault();
+              } else {
+                console.log("error");
+              }
+            };
+            xhr3.send(null);
+          }
+        }
+        
+        function updateCart(){
+          var iddc = document.getElementsByClassName("iddc");
+          var iddp = document.getElementsByClassName("iddp");
+          var qnt = document.getElementsByClassName("input-number");
+          for(i=0;i<iddc.length;i++){
+            updateCartItem(iddc[i].value, iddp[i].value, qnt[i].value);
+          }
+          alert("Cart updated");
+                location.reload();
+        }
+        function updateCartItem(iddc, iddp, qnt){
+          var url = "http://127.0.0.1:3000/paniers/"+iddc; // Définir la collection à manipuler
+            // Récupère les données saisies dans la variable data.
+            
+            var data = {};
+            data.idUser = localStorage.getItem("idU");
+            data.idProduit = iddp;
+            data.quantite = qnt;
+            
+            var json = JSON.stringify(data); // Convertir la variable de données en JSON.
+            var xhr = new XMLHttpRequest(); // Définir une requête de connection standard JS
+            xhr.open("PUT", url, true); // Choisir la méthode POST comme une méthode d'accès au serveur et récupérer les données .
+            xhr.setRequestHeader("Content-type", "application/json; charset=utf-8"); // Choisir l'encodage utf-8 pour que la resultat retourne peut avoir différents format de text comme les côté , les accent …..
+            // Load les données à partir de la serveur -> début connection
+            xhr.onload = function () {
+              var admins = JSON.parse(xhr.responseText); // Conversion des données en format json
+              // Si le status retourné par le serveur est 200
+              if (xhr.readyState == 4 && xhr.status == "200") {
+                console.log("success")
+              } else {
+                alert(admins.message);
+                console.table(admins);
+              }
+            };
+            xhr.send(json);
+        }
+        function commander(){
+          var ch = ``;
+          var iddp = document.getElementsByClassName("iddp");
+          var qnt = document.getElementsByClassName("input-number");
+          for(i=0;i<iddp.length;i++){
+            ch+=iddp[i].value + `*` + qnt[i].value + `,`;
+          }
+          var url = "http://127.0.0.1:3000/commandes"; // Définir la collection à manipuler
+            // Récupère les données saisies dans la variable data.
+            var data = {};
+            data.idUser = localStorage.getItem("idU");
+            data.commande = ch; 
+            data.status = 0; 
+            data.total = document.getElementById("subTotal").innerHTML; 
+            
+            var json = JSON.stringify(data); // Convertir la variable de données en JSON.
+            var xhr = new XMLHttpRequest(); // Définir une requête de connection standard JS
+            xhr.open("POST", url, true); // Choisir la méthode POST comme une méthode d'accès au serveur et récupérer les données .
+            xhr.setRequestHeader("Content-type", "application/json; charset=utf-8"); // Choisir l'encodage utf-8 pour que la resultat retourne peut avoir différents format de text comme les côté , les accent …..
+            // Load les données à partir de la serveur -> début connection
+            xhr.onload = function () {
+              var admins = JSON.parse(xhr.responseText); // Conversion des données en format json
+              // Si le status retourné par le serveur est 200
+              if (xhr.readyState == 4 && xhr.status == "200") {
+               // deleteItems();
+              
+               window.location="checkout.html"
+              } else {
+                alert(admins.message);
+                console.table(admins);
+              }
+            };
+            xhr.send(json);
+      
+        }
+       
+      </script>
+      
+      <script>
+        function logout() {
+          var d = window.confirm("want to LogOut");
+          if (d == true) {
+            // localStorage.removeItem("idA");
+            localStorage.clear();
+            location.href = "index.html";
+          }
+        }
+      </script>
+      <script>
+            
+        // Définir une requête de connection standard JS
+        var request = new XMLHttpRequest();
+        // Choisir la méthode GET comme une méthode d'accès au serveur et récupérer les données .
+        request.open("GET", "http://127.0.0.1:3000/favorites", true);
+        // Load les données à partir de la serveur -> Début connection
+        request.onload = function () {
+           
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
+          var l=0;
+          data.forEach((i) => {
+           
+            if(i.user == localStorage.getItem("idU")){
+                console.log(i._id)
+                   l+=1;
+                   }
+                });
+                document.getElementById("lengthFav").innerHTML = l;
+              };
+        // Send request
+       
+        request.send();
+       
+      </script>
+      <script>
+       
+        // Définir une requête de connection standard JS
+        var request = new XMLHttpRequest();
+        // Choisir la méthode GET comme une méthode d'accès au serveur et récupérer les données .
+        request.open("GET", "http://127.0.0.1:3000/paniers", true);
+        // Load les données à partir de la serveur -> Début connection
+        request.onload = function () {
+          // Begin accessing JSON data here
+          var data = JSON.parse(this.response);
+          var l=0;
+          data.forEach((i) => {
+            if(i.idUser == localStorage.getItem("idU")){
+                   l+=1; }
+                }
+                 );
+                 document.getElementById("lengthPanier").innerHTML = l;
+              };
+        // Send request
+        request.send();
+       
+      </script>
+      
+</body>
+
+</html>
